@@ -1,4 +1,6 @@
 /* eslint-disable linebreak-style */
+/* eslint-disable no-trailing-spaces */
+/* eslint-disable linebreak-style */
 /* eslint-disable no-unused-vars */
 /* eslint-disable linebreak-style */
 const CODES = {
@@ -6,23 +8,30 @@ const CODES = {
   z: 90
 };
 
-function createCell() {
+function toCell(_, col) {
   return `
-    <div class="cell" contenteditable>
+    <div class="cell" contenteditable data-col="${col}">
       B2
     </div>
   `
 }
 
-function createCol(el) {
-  return `<div class="column">${el}</div>`;
-}
-
-function createRow(idx, content) {
+function toColumn(el, idx) {
   return `
-    <div class="row">
+    <div class="column" data-type="resizable" data-col="${idx}">
+      ${el}
+      <div class="col-resize" data-resize="col"></div>
+    </div>
+  `;
+} 
+ 
+function createRow(idx, content) {
+  const resizer = idx ? '<div class="row-resize" data-resize="row"></div>' : '';
+  return `
+    <div class="row" data-type="resizable">
       <div class="row-info">
         ${idx ? idx : ''}
+        ${resizer}
       </div>
       <div class="row-data">
         ${content}
@@ -42,17 +51,15 @@ export function createTable(rowsCount = 15, ) {
   const cols = new Array(colsCount)
       .fill('')
       .map(toChar)
-      .map(createCol)
+      .map(toColumn)
       .join('');
-
-  console.log(cols);
 
   rows.push(createRow(null, cols));
 
   for (let i = 0; i < rowsCount; i++) {
     const cells = new Array(colsCount)
         .fill('')
-        .map(createCell)
+        .map(toCell)
         .join('')
     rows.push(createRow(i + 1, cells));
   }
