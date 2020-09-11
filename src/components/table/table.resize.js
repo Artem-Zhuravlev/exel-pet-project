@@ -1,8 +1,7 @@
+/* eslint-disable no-trailing-spaces */
 /* eslint-disable linebreak-style */
 /* eslint-disable eol-last */
-/* eslint-disable linebreak-style */
 /* eslint-disable arrow-parens */
-/* eslint-disable linebreak-style */
 import {$} from '@core/dom';
 
 export function resizeHandler($root, event) {
@@ -14,7 +13,7 @@ export function resizeHandler($root, event) {
   let value;
 
   $resizer.css({
-    opacity: 1,
+    opacity: 1, 
     [siteProp]: '-5000px'
   });
 
@@ -52,4 +51,4 @@ export function resizeHandler($root, event) {
       right: 0
     });
   }
-}
+} 
