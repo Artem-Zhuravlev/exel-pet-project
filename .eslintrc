@@ -9,7 +9,11 @@
         "semi": "off",
         "arrow-parents": "off",
         "comma-dangle": "off",
-        "require-jsdoc": "off"
+        "require-jsdoc": "off",
+        "linebreak-style": "off",
+        "eol-last": "off",
+        "arrow-parens": "off"
+
     },
     "extends": ["eslint:recommended", "google"]
-}
+} 

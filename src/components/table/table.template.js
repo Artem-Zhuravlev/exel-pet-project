@@ -1,3 +1,4 @@
+/* eslint-disable spaced-comment */
 /* eslint-disable linebreak-style */
 /* eslint-disable no-trailing-spaces */
 /* eslint-disable linebreak-style */
@@ -8,12 +9,18 @@ const CODES = {
   z: 90
 };
 
-function toCell(_, col) {
-  return `
-    <div class="cell" contenteditable data-col="${col}">
-      B2
-    </div>
-  `
+function toCell(row) {
+  return function(_, col) {
+    return `
+      <div 
+        class="cell" 
+        contenteditable 
+        data-col="${col}"
+        data-type="cell" 
+        data-id="${row}:${col}"
+      >
+      </div>`;
+  }
 }
 
 function toColumn(el, idx) {
@@ -56,12 +63,13 @@ export function createTable(rowsCount = 15, ) {
 
   rows.push(createRow(null, cols));
 
-  for (let i = 0; i < rowsCount; i++) {
+  for (let row = 0; row < rowsCount; row++) {
     const cells = new Array(colsCount)
         .fill('')
-        .map(toCell)
+        //.map((_, col) => toCell(row, col))
+        .map(toCell(row))
         .join('')
-    rows.push(createRow(i + 1, cells));
+    rows.push(createRow(row + 1, cells));
   }
 
   return rows.join('');
