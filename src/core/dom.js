@@ -1,14 +1,8 @@
-/* eslint-disable operator-linebreak */
-/* eslint-disable linebreak-style */
-/* eslint-disable eol-last */
-/* eslint-disable linebreak-style */
-/* eslint-disable arrow-parens */
-/* eslint-disable linebreak-style */
 class Dom {
   constructor(selector) {
-    this.$el = typeof selector === 'string'
-      ? document.querySelector(selector)
-      : selector
+    this.$el = typeof selector === 'string' ?
+      document.querySelector(selector) :
+      selector
   }
 
   html(html) {
@@ -20,15 +14,14 @@ class Dom {
   }
 
   text(text) {
-    if (typeof text === 'string') {
-      this.$el.textContent = text;
-      return this;
+    if (typeof text !== 'undefined') {
+      this.$el.textContent = text
+      return this
     }
-
     if (this.$el.tagName.toLowerCase() === 'input') {
-      return this.$el.value.trim();
+      return this.$el.value.trim()
     }
-    return this.$el.textContent.trim();
+    return this.$el.textContent.trim()
   }
 
   clear() {
@@ -42,6 +35,17 @@ class Dom {
 
   off(eventType, callback) {
     this.$el.removeEventListener(eventType, callback)
+  }
+
+  find(selector) {
+    return $(this.$el.querySelector(selector))
+  }
+
+  getStyles(styles = []) {
+    return styles.reduce((res, s) => {
+      res[s] = this.$el.style[s]
+      return res
+    }, {})
   }
 
   append(node) {
@@ -75,40 +79,48 @@ class Dom {
   }
 
   css(styles = {}) {
-    Object.keys(styles).forEach(key => {
-      this.$el.style[key] = styles[key];
-    })
-  }
-
-  find(selector) {
-    return $(this.$el.querySelector(selector));
-  }
-  addClass(className) {
-    this.$el.classList.add(className);
-    return this;
-  }
-  focus() {
-    this.$el.focus();
-    return this;
-  }
-  removeClass(className) {
-    this.$el.classList.remove(className);
-    return this;
+    Object
+        .keys(styles)
+        .forEach(key => {
+          this.$el.style[key] = styles[key]
+        })
   }
 
   id(parse) {
     if (parse) {
-      const parsed = this.id().split(':');
+      const parsed = this.id().split(':')
       return {
         row: +parsed[0],
         col: +parsed[1]
       }
     }
-    return this.data.id;
+    return this.data.id
+  }
+
+  focus() {
+    this.$el.focus()
+    return this
+  }
+
+  addClass(className) {
+    this.$el.classList.add(className)
+    return this
+  }
+
+  removeClass(className) {
+    this.$el.classList.remove(className)
+    return this
+  }
+
+  attr(name, value) {
+    if (value) {
+      this.$el.setAttribute(name, value)
+      return this
+    }
+    return this.$el.getAttribute(name)
   }
 }
 
-// event.target
 export function $(selector) {
   return new Dom(selector)
 }

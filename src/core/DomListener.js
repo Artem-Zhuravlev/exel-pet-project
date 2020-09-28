@@ -1,4 +1,3 @@
-/* eslint-disable arrow-parens */
 import {capitalize} from '@core/utils'
 
 export class DomListener {
